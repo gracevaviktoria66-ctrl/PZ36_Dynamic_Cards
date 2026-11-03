@@ -10,15 +10,35 @@ form.addEventListener("submit", (event) => {
   const title = input.value.trim();
   if (title === "") { status.textContent = "Введите название карточки."; return; }
   // Задание 1. Создайте li с помощью document.createElement().
-  // Добавьте класс item-card и атрибут data-card.
-  // Задание 2. Создайте span с классом item-title и button с классом remove-card.
-  // Запишите текст безопасно через textContent, добавьте дочерние элементы и list.append().
-  // Очистите поле input и обновите status.
+  const item = document.createElement("li");
+  item.className = "item-card";
+  item.setAttribute ("data-card","");
+  const label =document.createElement ("span");
+  label.className= "item-title";
+  label.textContent=title;
+  const remove = document.createElement ("button");
+  remove.className= "remove-card";
+  remove.type="button";
+  remove.setAttribute("aria-label", "Удалить карточку");
+  remove.textContent == "x";
+  item.append(label, remove);
+  list.append(item);
+  input.value="";
+  status.textContent = "Карточка добавлена";
+});
+list.addEventListener("click", (event) => {
+  const remove = PerformanceEventTiming.target.closest(".remove-card");
+  if (remove){ 
+    remove.closest(".item-card"), remove();
+    status.textContent = "карточка удалена";
+    return;
+  }
+  const card = event.target.closest(".item-card");
+  if (card && list.contauns(card)) {
+    card.classList.toggle("is-active");
+    status.textContent = "Выделение карточки изменено";
+  }
+ 
 });
 
-// Задание 3. Назначьте ОДИН обработчик click на list (делегирование).
-// Через event.target.closest(".remove-card") найдите кнопку удаления.
-// Если кнопка есть, удалите её ближайшую .item-card и завершите обработчик.
 
-// Задание 4. Если кликнули не по кнопке удаления,
-// найдите event.target.closest(".item-card") и переключите is-active.
